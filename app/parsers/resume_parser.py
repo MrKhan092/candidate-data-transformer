@@ -13,7 +13,6 @@ class ResumeParser:
 
     def __init__(self):
         self.pdf_parser = PDFParser()
-        self.llm = get_llm()
 
     def parse(self, pdf_path: str) -> CandidateProfile:
         # Extract text from PDF
@@ -23,13 +22,27 @@ class ResumeParser:
         prompt = build_resume_prompt(resume_text)
 
         # Ask Gemini
-        response = self.llm.generate(
+        llm = get_llm()
+
+        response = llm.generate(
             prompt=prompt,
             system_instruction=SYSTEM_PROMPT,
         )
 
-        # Convert JSON string to Python dictionary
+        # Clean Gemini response
+        response = response.strip()
+
+        # Remove Markdown code fences if present
+        if response.startswith("```json"):
+            response = response[len("```json"):]
+
+        if response.endswith("```"):
+            response = response[:-3]
+
+        response = response.strip()
+
+        # Convert JSON string to dictionary
         data = json.loads(response)
 
-        # Validate using Pydantic
+        # Validate and return CandidateProfile
         return CandidateProfile.model_validate(data)

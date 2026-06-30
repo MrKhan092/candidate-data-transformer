@@ -1,3 +1,0 @@
-# prompts.md
-
-Stub document.

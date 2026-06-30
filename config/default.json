@@ -4,11 +4,9 @@
     "temperature": 0.1,
     "max_output_tokens": 4096
   },
-
   "normalizers": {
     "fuzzy_threshold": 80
   },
-
   "confidence": {
     "base_confidence": {
       "resume_pdf": 0.85,
