@@ -1,3 +1,3 @@
-"""
-Stub for app/ai/__init__.py
-"""
+from app.ai.factory import get_llm
+
+__all__ = ["get_llm"]
