@@ -85,7 +85,7 @@ candidate-transformer/
 # Clone Repository
 
 ```bash
-git clone https://github.com/<YOUR_GITHUB_USERNAME>/candidate-transformer.git
+git clone https://github.com/MrKhan092/candidate-transformer.git
 
 cd candidate-transformer
 ```
@@ -124,7 +124,7 @@ pip install -r requirements.txt
 
 # Environment Variables
 
-Copy the example file
+Create a `.env` file by copying the provided template:
 
 ```bash
 cp .env.example .env
@@ -303,65 +303,15 @@ Canonical Candidate JSON
 
 ### Frontend (Vercel)
 
-```
-https://YOUR_FRONTEND_URL.vercel.app
-```
+https://candidate-data-transformer.vercel.app
 
 ### Backend (Render)
 
-```
-https://YOUR_BACKEND_URL.onrender.com
-```
-
----
-
-# Example Pipeline
-
-```
-Resume PDF
-      │
-      ▼
-Recruiter CSV
-      │
-      ▼
-GitHub Username
-      │
-      ▼
-Normalization
-      │
-      ▼
-Merge Engine
-      │
-      ▼
-Confidence Engine
-      │
-      ▼
-Provenance Engine
-      │
-      ▼
-Projection Engine
-      │
-      ▼
-Canonical Candidate JSON
-```
-
----
-
-# Deployment
-
-### Backend
-
-- Render
-
-### Frontend
-
-- Vercel
-
----
+https://candidate-data-transformer-t39e.onrender.com
 
 # Notes
 
-- A valid Google Gemini API key is required.
+- If you clone this repository, provide your own Google Gemini API key in the `.env` file.
 - A GitHub Personal Access Token is recommended to avoid API rate limits.
 - The Render free instance may take 30–50 seconds to respond after inactivity (cold start).
 - A scheduled cron job periodically pings the backend to reduce cold starts.
