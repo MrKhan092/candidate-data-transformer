@@ -23,5 +23,6 @@ class Skill(BaseModel):
 
 class Provenance(BaseModel):
     field: str
+    value: str
     source: str
     method: str
