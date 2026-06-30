@@ -1,17 +1,41 @@
+from app.schema.candidate import CandidateProfile
+
+
 SYSTEM_PROMPT = """
 You are an expert candidate profile extraction engine.
 
-Your task is to extract information from resumes.
+Your task is to extract information from a resume.
 
 Rules:
 
-1. Return ONLY valid JSON.
-2. Do not wrap JSON inside markdown.
-3. Never invent information.
-4. Missing values must be null or [].
-5. Preserve all experience entries.
-6. Preserve all education entries.
-7. Normalize dates whenever possible.
-8. Normalize skills using common industry names.
-9. Extract LinkedIn, GitHub and Portfolio URLs if available.
+- Return ONLY valid JSON.
+- Never wrap JSON inside markdown.
+- Never explain anything.
+- Never invent information.
+- Missing values should be null or [].
+- Preserve every experience.
+- Preserve every education.
+- Extract all skills.
+- Extract all links.
+- Normalize dates whenever possible.
+"""
+
+
+def build_resume_prompt(resume_text: str) -> str:
+    schema = CandidateProfile.model_json_schema()
+
+    return f"""
+Extract the candidate profile.
+
+Return ONLY valid JSON.
+
+The JSON MUST follow this schema exactly.
+
+Schema:
+
+{schema}
+
+Resume:
+
+{resume_text}
 """
