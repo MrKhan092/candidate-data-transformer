@@ -1,3 +1,19 @@
-"""
-Stub for app/parsers/pdf_parser.py
-"""
+import fitz
+
+
+class PDFParser:
+    """
+    Extract plain text from PDF resumes.
+    """
+
+    def extract_text(self, pdf_path: str) -> str:
+        doc = fitz.open(pdf_path)
+
+        text = ""
+
+        for page in doc:
+            text += page.get_text()
+
+        doc.close()
+
+        return text.strip()
