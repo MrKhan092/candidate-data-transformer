@@ -25,6 +25,7 @@ app = FastAPI(
 origins = [
     "http://localhost:5173",
     "https://candidate-data-transformer.vercel.app",
+    "https://candidate-data-transformer-t39e.onrender.com",
 ]
 
 app.add_middleware(
