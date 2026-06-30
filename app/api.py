@@ -21,17 +21,11 @@ app = FastAPI(
     version="1.0.0",
 )
 
-# Enable CORS for frontend requests
-origins = [
-    "http://localhost:5173",
-    "https://candidate-data-transformer.vercel.app",
-    "https://candidate-data-transformer-t39e.onrender.com",
-]
-
+# Enable CORS for all origins (public API, no cookies/sessions)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
+    allow_origins=["*"],
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
