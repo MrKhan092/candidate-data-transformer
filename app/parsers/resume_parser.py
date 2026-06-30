@@ -28,8 +28,8 @@ class ResumeParser:
             system_instruction=SYSTEM_PROMPT,
         )
 
-        # Convert JSON string to Python dict
+        # Convert JSON string to Python dictionary
         data = json.loads(response)
 
-        # Validate with Pydantic
+        # Validate using Pydantic
         return CandidateProfile.model_validate(data)

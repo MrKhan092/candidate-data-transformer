@@ -1,3 +1,9 @@
-"""
-Stub for app/normalizers/base.py
-"""
+class BaseNormalizer:
+
+    @staticmethod
+    def clean(value: str):
+
+        if value is None:
+            return None
+
+        return value.strip()

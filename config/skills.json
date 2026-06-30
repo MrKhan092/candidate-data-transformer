@@ -1,0 +1,23 @@
+{
+    "react": "React",
+    "reactjs": "React",
+    "react.js": "React",
+
+    "node": "Node.js",
+    "nodejs": "Node.js",
+    "node.js": "Node.js",
+
+    "typescript": "TypeScript",
+    "ts": "TypeScript",
+
+    "javascript": "JavaScript",
+    "js": "JavaScript",
+
+    "golang": "Go",
+    "go": "Go",
+
+    "cpp": "C++",
+    "c++": "C++",
+
+    "tailwindcss": "Tailwind CSS"
+}

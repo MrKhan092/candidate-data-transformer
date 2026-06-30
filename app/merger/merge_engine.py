@@ -5,8 +5,9 @@ from app.schema.candidate import CandidateProfile
 
 class MergeEngine:
 
+    @classmethod
     def merge(
-        self,
+        cls,
         resume: CandidateProfile,
         recruiter: CandidateProfile,
         github: CandidateProfile,
@@ -14,28 +15,25 @@ class MergeEngine:
 
         merged = deepcopy(resume)
 
-        # ---------- Full Name ----------
-        if not merged.full_name:
-            merged.full_name = (
-                recruiter.full_name
-                or github.full_name
-            )
-
-        # ---------- Emails ----------
+        # ------------------------
+        # Emails
+        # ------------------------
         merged.emails = list(
             dict.fromkeys(
-                merged.emails
-                + recruiter.emails
-                + github.emails
+                resume.emails +
+                recruiter.emails +
+                github.emails
             )
         )
 
-        # ---------- Phones ----------
+        # ------------------------
+        # Phones
+        # ------------------------
         merged.phones = list(
             dict.fromkeys(
-                merged.phones
-                + recruiter.phones
-                + github.phones
+                resume.phones +
+                recruiter.phones +
+                github.phones
             )
         )
 

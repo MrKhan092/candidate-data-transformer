@@ -1,20 +1,34 @@
 import phonenumbers
 
+from app.normalizers.base import BaseNormalizer
 
-class PhoneNormalizer:
 
-    @staticmethod
-    def normalize(phone: str) -> str:
+class PhoneNormalizer(BaseNormalizer):
+
+    DEFAULT_REGION = "IN"
+
+    @classmethod
+    def normalize(cls, phone: str):
+
+        if not phone:
+            return None
+
+        phone = cls.clean(phone)
+
         try:
-            parsed = phonenumbers.parse(phone, "IN")
 
-            if phonenumbers.is_valid_number(parsed):
-                return phonenumbers.format_number(
-                    parsed,
-                    phonenumbers.PhoneNumberFormat.E164,
-                )
+            parsed = phonenumbers.parse(
+                phone,
+                cls.DEFAULT_REGION,
+            )
 
-        except Exception:
-            pass
+            if not phonenumbers.is_valid_number(parsed):
+                return None
 
-        return phone
+            return phonenumbers.format_number(
+                parsed,
+                phonenumbers.PhoneNumberFormat.E164,
+            )
+
+        except phonenumbers.NumberParseException:
+            return None
