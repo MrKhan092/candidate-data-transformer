@@ -39,10 +39,12 @@ def health():
 @app.get("/")
 def home():
     return {
-        "message": "Candidate Transformer API is running!"
+        "service": "Candidate Transformer API",
+        "status": "running",
+        "version": "1.0.0",
+        "docs": "/docs"
     }
-
-
+    
 @app.post("/transform")
 async def transform(
     resume: UploadFile = File(...),
