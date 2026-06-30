@@ -1,0 +1,12 @@
+{
+  "priorities": {
+    "name": ["recruiter_csv", "resume_pdf", "github_profile"],
+    "email": ["recruiter_csv", "resume_pdf", "github_profile"],
+    "phone": ["recruiter_csv", "resume_pdf"],
+    "location": ["resume_pdf", "recruiter_csv", "github_profile"],
+    "skills": ["resume_pdf", "github_profile", "recruiter_csv"],
+    "experience": ["resume_pdf", "recruiter_csv"],
+    "education": ["resume_pdf", "recruiter_csv"],
+    "github_profile": ["github_profile", "recruiter_csv", "resume_pdf"]
+  }
+}

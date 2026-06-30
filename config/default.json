@@ -1,0 +1,84 @@
+{
+  "llm": {
+    "model_name": "gemini-1.5-flash",
+    "temperature": 0.1,
+    "max_output_tokens": 4096
+  },
+  "normalizers": {
+    "fuzzy_threshold": 80.0,
+    "skills": {
+      "canonical_skills": [
+        "Python",
+        "JavaScript",
+        "TypeScript",
+        "React",
+        "React Native",
+        "Vue.js",
+        "Angular",
+        "Node.js",
+        "Golang",
+        "Java",
+        "C++",
+        "Rust",
+        "SQL",
+        "PostgreSQL",
+        "MongoDB",
+        "Docker",
+        "Kubernetes",
+        "AWS",
+        "GCP",
+        "Azure",
+        "PyTorch",
+        "TensorFlow",
+        "FastAPI",
+        "Flask",
+        "Django",
+        "HTML",
+        "CSS",
+        "Git"
+      ]
+    },
+    "companies": {
+      "canonical_companies": [
+        "Google",
+        "Eightfold AI",
+        "Meta",
+        "Apple",
+        "Amazon",
+        "Microsoft",
+        "Netflix",
+        "OpenAI",
+        "Stripe",
+        "Uber",
+        "Airbnb"
+      ]
+    },
+    "countries": {
+      "default_country_code": "US",
+      "canonical_countries": {
+        "usa": "US",
+        "united states": "US",
+        "united states of america": "US",
+        "u.s.a.": "US",
+        "u.s.": "US",
+        "india": "IN",
+        "united kingdom": "GB",
+        "uk": "GB",
+        "u.k.": "GB",
+        "canada": "CA",
+        "germany": "DE",
+        "france": "FR",
+        "singapore": "SG"
+      }
+    }
+  },
+  "confidence": {
+    "base_confidence": {
+      "recruiter_csv": 0.95,
+      "resume_pdf": 0.85,
+      "github_profile": 0.90
+    },
+    "boost_consensus": 0.05,
+    "max_confidence": 1.0
+  }
+}

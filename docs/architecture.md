@@ -1,0 +1,3 @@
+# architecture.md
+
+Stub document.
