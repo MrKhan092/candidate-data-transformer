@@ -5,38 +5,38 @@ import { FiCode, FiLayers, FiServer, FiDatabase, FiCloud, FiTool, FiGrid } from 
 const SKILL_CATEGORIES = {
   Languages: {
     icon: FiCode,
-    color: 'text-blue-400 bg-blue-500/10 border-blue-500/15',
-    chipColor: 'border-blue-500/20 bg-blue-500/8 text-blue-300',
+    color: 'text-blue-600 bg-blue-50 border-blue-200',
+    chipColor: 'border-blue-200 bg-blue-50 text-blue-700',
     keywords: ['python', 'javascript', 'typescript', 'java', 'c++', 'c#', 'rust', 'go', 'golang', 'ruby', 'php', 'swift', 'kotlin', 'scala', 'r', 'bash', 'sql', 'html', 'css'],
   },
   Frontend: {
     icon: FiLayers,
-    color: 'text-purple-400 bg-purple-500/10 border-purple-500/15',
-    chipColor: 'border-purple-500/20 bg-purple-500/8 text-purple-300',
+    color: 'text-purple-600 bg-purple-50 border-purple-200',
+    chipColor: 'border-purple-200 bg-purple-50 text-purple-700',
     keywords: ['react', 'vue', 'angular', 'svelte', 'next.js', 'nextjs', 'tailwind', 'tailwind css', 'bootstrap', 'ejs', 'framer motion', 'redux'],
   },
   Backend: {
     icon: FiServer,
-    color: 'text-emerald-400 bg-emerald-500/10 border-emerald-500/15',
-    chipColor: 'border-emerald-500/20 bg-emerald-500/8 text-emerald-300',
+    color: 'text-emerald-600 bg-emerald-50 border-emerald-200',
+    chipColor: 'border-emerald-200 bg-emerald-50 text-emerald-700',
     keywords: ['node.js', 'nodejs', 'express', 'express.js', 'fastapi', 'django', 'flask', 'spring', 'nestjs', 'restful apis', 'graphql', 'passport.js', 'jwt', 'oauth2', 'nodemailer'],
   },
   Database: {
     icon: FiDatabase,
-    color: 'text-amber-400 bg-amber-500/10 border-amber-500/15',
-    chipColor: 'border-amber-500/20 bg-amber-500/8 text-amber-300',
+    color: 'text-amber-600 bg-amber-50 border-amber-200',
+    chipColor: 'border-amber-200 bg-amber-50 text-amber-700',
     keywords: ['mongodb', 'postgresql', 'mysql', 'redis', 'sqlite', 'firebase', 'prisma', 'prisma orm', 'dynamodb', 'elasticsearch'],
   },
   Cloud: {
     icon: FiCloud,
-    color: 'text-cyan-400 bg-cyan-500/10 border-cyan-500/15',
-    chipColor: 'border-cyan-500/20 bg-cyan-500/8 text-cyan-300',
+    color: 'text-cyan-600 bg-cyan-50 border-cyan-200',
+    chipColor: 'border-cyan-200 bg-cyan-50 text-cyan-700',
     keywords: ['aws', 'gcp', 'azure', 'docker', 'kubernetes', 'vercel', 'netlify', 'heroku', 'cloudinary', 'razorpay'],
   },
   Tools: {
     icon: FiTool,
-    color: 'text-rose-400 bg-rose-500/10 border-rose-500/15',
-    chipColor: 'border-rose-500/20 bg-rose-500/8 text-rose-300',
+    color: 'text-rose-600 bg-rose-50 border-rose-200',
+    chipColor: 'border-rose-200 bg-rose-50 text-rose-700',
     keywords: ['git', 'github', 'vs code', 'postman', 'intellij', 'jira', 'figma', 'webpack', 'vite', 'eslint'],
   },
 };
@@ -94,7 +94,7 @@ const SkillsCard = ({ skills = [] }) => {
             <Icon className="h-3 w-3" />
           </div>
           <span className="text-[11px] font-bold uppercase tracking-wider text-slate-400">{name}</span>
-          <span className="rounded bg-slate-800/50 px-1.5 py-0.5 text-[10px] font-bold text-slate-500">{items.length}</span>
+          <span className="rounded bg-slate-100 px-1.5 py-0.5 text-[10px] font-bold text-slate-500">{items.length}</span>
         </div>
         <motion.div variants={containerVariants} initial="hidden" animate="visible" className="flex flex-wrap gap-2">
           {items.map((skillName, idx) => (
@@ -117,14 +117,14 @@ const SkillsCard = ({ skills = [] }) => {
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35, delay: 0.1 }}
-      className="glass-card w-full rounded-2xl p-6"
+      className="glass-panel w-full rounded-2xl p-6"
     >
       <div className="mb-5 flex items-center justify-between">
         <div className="flex items-center gap-2.5">
-          <FiGrid className="h-4.5 w-4.5 text-blue-500" />
+          <FiGrid className="h-4.5 w-4.5 text-teal-500" />
           <h4 className="text-sm font-bold uppercase tracking-wider text-slate-400">Technical Skills</h4>
         </div>
-        <span className="rounded-lg bg-slate-800/50 px-2 py-0.5 text-[10px] font-bold text-slate-500 ring-1 ring-white/5">
+        <span className="rounded-lg bg-slate-100 px-2 py-0.5 text-[10px] font-bold text-slate-500 ring-1 ring-slate-200">
           {skills.length} total
         </span>
       </div>
@@ -136,8 +136,8 @@ const SkillsCard = ({ skills = [] }) => {
         {others.length > 0 &&
           renderCategory('Others', others, {
             icon: FiGrid,
-            color: 'text-slate-400 bg-slate-500/10 border-slate-500/15',
-            chipColor: 'border-slate-700 bg-slate-800/50 text-slate-300',
+            color: 'text-slate-500 bg-slate-50 border-slate-200',
+            chipColor: 'border-slate-200 bg-slate-50 text-slate-600',
           })}
       </div>
     </motion.div>

@@ -12,13 +12,19 @@ const apiClient = axios.create({
  * @param {File} resume - Resume PDF file
  * @param {File} recruiterCsv - Recruiter CSV file
  * @param {string} githubUsername - GitHub username string
+ * @param {Object} outputConfig - Optional output configuration JSON
  * @returns {Promise<Object>} The integrated candidate profile JSON
  */
-export const transformCandidateData = async (resume, recruiterCsv, githubUsername) => {
+export const transformCandidateData = async (resume, recruiterCsv, githubUsername, outputConfig) => {
   const formData = new FormData();
   formData.append('resume', resume);
   formData.append('recruiter_csv', recruiterCsv);
   formData.append('github_username', githubUsername);
+
+  // Send the output config as a JSON string
+  if (outputConfig) {
+    formData.append('output_config', JSON.stringify(outputConfig));
+  }
 
   try {
     const response = await apiClient.post('/transform', formData, {

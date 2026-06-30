@@ -37,24 +37,24 @@ const Loading = () => {
     <div className="flex flex-col items-center py-8 px-4">
       {/* Header */}
       <div className="mb-8 text-center">
-        <h3 className="text-lg font-bold tracking-tight text-white">
+        <h3 className="text-lg font-bold tracking-tight text-slate-800">
           AI Processing Pipeline
         </h3>
-        <p className="mt-1 text-xs text-slate-500">
+        <p className="mt-1 text-xs text-slate-400">
           Transforming multi-source data into a unified candidate profile
         </p>
       </div>
 
       {/* Progress bar */}
       <div className="mb-8 w-full max-w-sm">
-        <div className="h-1 w-full overflow-hidden rounded-full bg-slate-800">
+        <div className="h-1.5 w-full overflow-hidden rounded-full bg-slate-100">
           <motion.div
             animate={{ width: `${progress}%` }}
             transition={{ duration: 0.5, ease: 'easeOut' }}
-            className="h-full rounded-full bg-gradient-to-r from-blue-500 to-indigo-500"
+            className="h-full rounded-full bg-gradient-to-r from-teal-500 to-cyan-500"
           />
         </div>
-        <p className="mt-2 text-center text-[11px] font-medium text-slate-500">
+        <p className="mt-2 text-center text-[11px] font-medium text-slate-400">
           {completedSteps} of {pipelineSteps.length} steps completed
         </p>
       </div>
@@ -73,16 +73,16 @@ const Loading = () => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: index * 0.04, duration: 0.2 }}
               className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-colors ${
-                isActive ? 'bg-blue-500/8' : ''
+                isActive ? 'bg-teal-50/70' : ''
               }`}
             >
               {/* Status icon */}
               <div className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-xs transition-all ${
                 isCompleted
-                  ? 'bg-emerald-500/15 text-emerald-400'
+                  ? 'bg-emerald-50 text-emerald-600'
                   : isActive
-                  ? 'bg-blue-500/15 text-blue-400'
-                  : 'bg-slate-800/30 text-slate-600'
+                  ? 'bg-teal-50 text-teal-600'
+                  : 'bg-slate-50 text-slate-400'
               }`}>
                 {isCompleted ? (
                   <FiCheck className="h-3.5 w-3.5" />
@@ -95,14 +95,14 @@ const Loading = () => {
 
               {/* Step label */}
               <span className={`text-xs font-medium transition-colors ${
-                isCompleted ? 'text-slate-300' : isActive ? 'text-blue-300' : 'text-slate-600'
+                isCompleted ? 'text-slate-600' : isActive ? 'text-teal-700' : 'text-slate-400'
               }`}>
                 {step.label}
               </span>
 
               {/* Completed checkmark text */}
               {isCompleted && (
-                <span className="ml-auto text-[10px] font-medium text-emerald-500/70">Done</span>
+                <span className="ml-auto text-[10px] font-medium text-emerald-500">Done</span>
               )}
             </motion.div>
           );

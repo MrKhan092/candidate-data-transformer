@@ -50,6 +50,7 @@ async def transform(
     resume: UploadFile = File(...),
     recruiter_csv: UploadFile = File(...),
     github_username: str = Form(...),
+    output_config: str = Form(None),
 ):
 
     temp_dir = tempfile.mkdtemp()
@@ -107,9 +108,17 @@ async def transform(
     # Projection
     # -------------------------
 
+    # Use custom output config from frontend if provided,
+    # otherwise fall back to config/output.json
+    config_path = "config/output.json"
+    if output_config:
+        config_path = os.path.join(temp_dir, "output_config.json")
+        with open(config_path, "w") as f:
+            f.write(output_config)
+
     output = ProjectionEngine.project(
         profile,
-        "config/output.json",
+        config_path,
     )
 
     shutil.rmtree(temp_dir)
