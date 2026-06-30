@@ -1,9 +1,11 @@
 import React, { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { FiUploadCloud, FiFileText, FiCheckCircle, FiGithub, FiTrash2, FiCpu, FiRefreshCw, FiDatabase } from 'react-icons/fi';
+import { FiUploadCloud, FiFileText, FiCheckCircle, FiGithub, FiTrash2, FiCpu, FiRefreshCw, FiDatabase, FiBox } from 'react-icons/fi';
 import toast from 'react-hot-toast';
 
-const FileUploadZone = ({ label, stepNumber, file, setFile, dragging, setDragging, inputRef, accept, acceptLabel, icon: Icon, loading }) => {
+const SAMPLE_GITHUB_USERNAME = 'MrKhan092';
+
+const FileUploadZone = ({ label, stepNumber, file, setFile, onClear, dragging, setDragging, inputRef, accept, acceptLabel, icon: Icon, loading, onUseSample, sampleLabel }) => {
   const onDragOver = (e) => { e.preventDefault(); setDragging(true); };
   const onDragLeave = (e) => { e.preventDefault(); setDragging(false); };
   const onDrop = (e) => {
@@ -67,7 +69,7 @@ const FileUploadZone = ({ label, stepNumber, file, setFile, dragging, setDraggin
         {file && !loading && (
           <button
             type="button"
-            onClick={(e) => { e.stopPropagation(); setFile(null); }}
+            onClick={(e) => { e.stopPropagation(); onClear(); }}
             className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-slate-500 transition-colors hover:bg-rose-500/10 hover:text-rose-400 focus:outline-none focus:ring-1 focus:ring-rose-500"
             aria-label="Remove file"
           >
@@ -75,6 +77,18 @@ const FileUploadZone = ({ label, stepNumber, file, setFile, dragging, setDraggin
           </button>
         )}
       </div>
+
+      {/* Use Sample Button */}
+      {!file && !loading && onUseSample && (
+        <button
+          type="button"
+          onClick={(e) => { e.stopPropagation(); onUseSample(); }}
+          className="mt-2 inline-flex items-center gap-1.5 rounded-lg bg-blue-500/8 px-3 py-1.5 text-[11px] font-semibold text-blue-400 ring-1 ring-blue-500/15 transition-all hover:bg-blue-500/15 hover:ring-blue-500/30 cursor-pointer focus:outline-none"
+        >
+          <FiBox className="h-3 w-3" />
+          {sampleLabel || 'Use Sample'}
+        </button>
+      )}
     </div>
   );
 };
@@ -110,6 +124,40 @@ const UploadForm = ({ onSubmit, loading }) => {
     toast.success(`CSV uploaded: ${file.name}`);
   };
 
+  // Fetch sample file from public/samples and create a File object
+  const fetchSampleFile = async (url, filename, mimeType) => {
+    try {
+      const response = await fetch(url);
+      if (!response.ok) throw new Error('Failed to fetch sample file');
+      const blob = await response.blob();
+      return new File([blob], filename, { type: mimeType });
+    } catch (err) {
+      toast.error('Could not load sample file.');
+      return null;
+    }
+  };
+
+  const handleUseSampleResume = async () => {
+    const file = await fetchSampleFile('/samples/sample_resume.pdf', 'sample_resume.pdf', 'application/pdf');
+    if (file) {
+      setResume(file);
+      toast.success('Sample resume loaded');
+    }
+  };
+
+  const handleUseSampleCsv = async () => {
+    const file = await fetchSampleFile('/samples/sample_recruiter.csv', 'sample_recruiter.csv', 'text/csv');
+    if (file) {
+      setCsv(file);
+      toast.success('Sample CSV loaded');
+    }
+  };
+
+  const handleUseSampleGithub = () => {
+    setGithubUsername(SAMPLE_GITHUB_USERNAME);
+    toast.success(`Sample username set: ${SAMPLE_GITHUB_USERNAME}`);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!resume) { toast.error('Please upload a resume PDF.'); return; }
@@ -119,6 +167,19 @@ const UploadForm = ({ onSubmit, loading }) => {
   };
 
   const readinessCount = [resume, csv, githubUsername.trim()].filter(Boolean).length;
+
+  // Load all samples at once
+  const handleLoadAllSamples = async () => {
+    const toastId = toast.loading('Loading sample data...');
+    const [resumeFile, csvFile] = await Promise.all([
+      fetchSampleFile('/samples/sample_resume.pdf', 'sample_resume.pdf', 'application/pdf'),
+      fetchSampleFile('/samples/sample_recruiter.csv', 'sample_recruiter.csv', 'text/csv'),
+    ]);
+    if (resumeFile) setResume(resumeFile);
+    if (csvFile) setCsv(csvFile);
+    setGithubUsername(SAMPLE_GITHUB_USERNAME);
+    toast.success('All sample data loaded!', { id: toastId });
+  };
 
   return (
     <motion.div
@@ -143,12 +204,25 @@ const UploadForm = ({ onSubmit, loading }) => {
         </span>
       </div>
 
+      {/* Quick Load All Samples */}
+      {readinessCount === 0 && !loading && (
+        <button
+          type="button"
+          onClick={handleLoadAllSamples}
+          className="mb-5 flex w-full items-center justify-center gap-2 rounded-xl border border-dashed border-blue-500/25 bg-blue-500/5 py-2.5 text-xs font-semibold text-blue-400 transition-all hover:bg-blue-500/10 hover:border-blue-500/40 cursor-pointer focus:outline-none"
+        >
+          <FiBox className="h-3.5 w-3.5" />
+          Load All Sample Data (Resume + CSV + GitHub)
+        </button>
+      )}
+
       <form onSubmit={handleSubmit} className="space-y-4">
         <FileUploadZone
           label="Resume PDF"
           stepNumber="1"
           file={resume}
           setFile={handleResumeChange}
+          onClear={() => setResume(null)}
           dragging={resumeDragging}
           setDragging={setResumeDragging}
           inputRef={resumeInputRef}
@@ -156,6 +230,8 @@ const UploadForm = ({ onSubmit, loading }) => {
           acceptLabel="PDF format only · Max 10MB"
           icon={FiFileText}
           loading={loading}
+          onUseSample={handleUseSampleResume}
+          sampleLabel="Use Sample Resume"
         />
 
         <FileUploadZone
@@ -163,6 +239,7 @@ const UploadForm = ({ onSubmit, loading }) => {
           stepNumber="2"
           file={csv}
           setFile={handleCsvChange}
+          onClear={() => setCsv(null)}
           dragging={csvDragging}
           setDragging={setCsvDragging}
           inputRef={csvInputRef}
@@ -170,6 +247,8 @@ const UploadForm = ({ onSubmit, loading }) => {
           acceptLabel="CSV format only · Comma separated"
           icon={FiDatabase}
           loading={loading}
+          onUseSample={handleUseSampleCsv}
+          sampleLabel="Use Sample CSV"
         />
 
         {/* GitHub Username */}
@@ -198,6 +277,17 @@ const UploadForm = ({ onSubmit, loading }) => {
               </div>
             )}
           </div>
+          {/* Use Sample GitHub */}
+          {!githubUsername.trim() && !loading && (
+            <button
+              type="button"
+              onClick={handleUseSampleGithub}
+              className="mt-2 inline-flex items-center gap-1.5 rounded-lg bg-blue-500/8 px-3 py-1.5 text-[11px] font-semibold text-blue-400 ring-1 ring-blue-500/15 transition-all hover:bg-blue-500/15 hover:ring-blue-500/30 cursor-pointer focus:outline-none"
+            >
+              <FiBox className="h-3 w-3" />
+              Use Sample Username
+            </button>
+          )}
         </div>
 
         {/* Submit Button */}
