@@ -29,7 +29,12 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
+@app.get("/health")
+def health():
+    return {
+        "status": "healthy",
+        "message": "Candidate Transformer API is running"
+    }
 
 @app.get("/")
 def home():
